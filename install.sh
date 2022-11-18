@@ -33,7 +33,7 @@ echo \
 
 chmod a+r /etc/apt/keyrings/docker.gpg
 apt-get update
-apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 }
 
@@ -46,7 +46,7 @@ function check_os_pkg {
     if [ "$docker_version" -lt "20" ]; then
         die "docker version is not 20"
     else
-        die "docker version ok"
+        echo "docker version ok"
     fi
 }
 
