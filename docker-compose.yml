@@ -16,7 +16,7 @@ services:
       - ./traefik/acme.json:/data/acme.json
 
   golive:
-    image: uhub.service.ucloud.cn/moryapub/live-c-front-index
+    image: uhub.service.ucloud.cn/moryapub/live-c-front
     restart: always
 
   hello:
