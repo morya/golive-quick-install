@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# set -x
+set -x
 # set -o errexit
-set -o nounset
+# set -o nounset
 
 function on_exit {
     echo 'exiting...'
