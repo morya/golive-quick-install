@@ -33,6 +33,7 @@ echo \
 
 chmod a+r /etc/apt/keyrings/docker.gpg
 apt-get update
+apt-get upgrade -y
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 }
