@@ -18,3 +18,7 @@ services:
   golive:
     image: uhub.service.ucloud.cn/moryapub/live-c-front-index
     restart: always
+
+  hello:
+    image: strm/helloworld-http
+    restart: always

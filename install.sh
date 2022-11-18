@@ -84,11 +84,8 @@ function check_domain {
 
 function setup_domain {
     current_ip=$(curl -sSL https://ipinfo.io | jq -c -r '.ip')
-    read -p "Enter your domain:" domain
-
+    
     check_domain $domain $current_ip
-
-    echo "      rule: Host(\`$domain\`)" >> traefik/traefik.d/03-routes.yaml
 
     echo "domain setup ok"
 }
@@ -100,5 +97,3 @@ check_os_pkg
 download_app
 setup_domain
 start_app
-
-crontab -a > sss
