@@ -1,0 +1,8 @@
+http:
+
+  services:
+    service-golive:
+      loadBalancer:
+        # passHostHeader: true
+        servers:
+          - url: http://golive:80

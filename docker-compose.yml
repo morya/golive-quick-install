@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  traefik:
+    image: traefik:v2.6
+    restart: always
+    command: --configfile=/etc/traefik/traefik.yaml --api.insecure=true --api.dashboard=true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - ./traefik/config.yaml:/etc/traefik/traefik.yaml
+      - ./traefik/traefik.d:/etc/traefik.d
+      - ./traefik/acme.json:/data/acme.json
+
+  golive:
+    image: uhub.service.ucloud.cn/moryapub/live-c-front-index:master
+    restart: always
+    ports:
+      - "80:80"
+    
