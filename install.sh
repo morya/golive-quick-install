@@ -16,9 +16,9 @@ function die {
 }
 
 function install_docker {
-apt-get remove docker docker-engine docker.io containerd runc
+apt-get remove -y docker docker-engine docker.io containerd runc
 
-apt-get install \
+apt-get install -y \
     ca-certificates \
     curl \
     gnupg \
