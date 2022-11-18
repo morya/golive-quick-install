@@ -18,6 +18,3 @@ services:
   golive:
     image: uhub.service.ucloud.cn/moryapub/live-c-front-index:master
     restart: always
-    ports:
-      - "80:80"
-    

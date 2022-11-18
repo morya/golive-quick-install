@@ -38,10 +38,19 @@ apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
 }
 
+function check_running_user {
+    uid=`id -u`
+    if [ "$uid" != "0" ]; then
+        die "run this script with root user"
+    fi
+}
+
 function check_os_pkg {
     which docker
     if [ $? -ne 0 ]; then
         install_docker
+    else
+        echo "docker is already installed"
     fi
     docker_version=`docker version -f '{{.Client.Version}}' | awk -F'.' '{print $1}'`
     if [ "$docker_version" -lt "20" ]; then
@@ -54,7 +63,6 @@ function check_os_pkg {
 function download_app {
     cd /root/
     git clone https://github.com/morya/golive-quick-install.git
-    cd golive-quick-install
 }
 
 function start_app {
@@ -64,6 +72,7 @@ function start_app {
     docker ps -a
 }
 
+check_running_user
 check_os_pkg
 prepare
 download_app
