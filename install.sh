@@ -35,7 +35,7 @@ chmod a+r /etc/apt/keyrings/docker.gpg
 apt-get update
 apt-get upgrade -y
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-
+apt-get install -y jq
 }
 
 function check_running_user {
@@ -72,8 +72,31 @@ function start_app {
     docker ps -a
 }
 
+function check_domain {
+    domain_ip=`nslookup $1 | grep Address | awk '{print $2}' | tail -1`
+    current_ip=$2
+
+    if [ "$domain_ip" != "$current_ip" ]; then
+        die "$1 is not pointing to a $current_ip"
+    fi
+}
+
+function setup_domain {
+    current_ip=$(curl -sSL https://ipinfo.io | jq -c -r '.ip')
+    read -p "Enter your domain:" domain
+
+    check_domain $domain $current_ip
+
+    echo "      rule: Host(\`$domain\`)" >> traefik/traefik.d/03-routes.yaml
+
+    echo "domain setup ok"
+}
+
+apt-get install -y jq
+
 check_running_user
 check_os_pkg
 prepare
 download_app
+setup_domain
 start_app

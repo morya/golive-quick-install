@@ -1,7 +1,6 @@
 http:
   routers:
     route-golive:
-      rule: Host(`live.domain.com`)
       tls:
         certResolver: myresolver
       middlewares:
@@ -9,3 +8,4 @@ http:
       entryPoints:
         - websecure
       service: service-golive
+      # rule: Host("live.domain.com")
