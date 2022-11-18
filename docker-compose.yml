@@ -16,5 +16,5 @@ services:
       - ./traefik/acme.json:/data/acme.json
 
   golive:
-    image: uhub.service.ucloud.cn/moryapub/live-c-front-index:master
+    image: uhub.service.ucloud.cn/moryapub/live-c-front-index
     restart: always

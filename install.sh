@@ -67,6 +67,7 @@ function download_app {
 
 function start_app {
     cd ~/golive-quick-install
+    docker compose pull --force
     docker compose down
     docker compose up -d
     docker ps -a
@@ -96,7 +97,8 @@ apt-get install -y jq
 
 check_running_user
 check_os_pkg
-prepare
 download_app
 setup_domain
 start_app
+
+crontab -a > sss
