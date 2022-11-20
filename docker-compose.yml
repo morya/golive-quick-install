@@ -2,7 +2,8 @@ version: '3'
 
 services:
   traefik:
-    image: traefik:v2.6
+    # image: traefik:v2.6
+    image: uhub.service.ucloud.cn/moryapub/traefik:v2.6
     restart: always
     command: --configfile=/etc/traefik/traefik.yaml --api.insecure=true --api.dashboard=true
     ports:
@@ -19,6 +20,6 @@ services:
     image: uhub.service.ucloud.cn/moryapub/live-c-front
     restart: always
 
-  hello:
-    image: strm/helloworld-http
-    restart: always
+  # hello:
+  #   image: strm/helloworld-http
+  #   restart: always
