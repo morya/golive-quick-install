@@ -1,0 +1,114 @@
+sentry_address: ""
+prod_run: false
+
+default_captcha_length: 5
+
+serve_address: api.demo.eagleplan.fun
+baishan_api_token: "41bc9af769edc28fb1d86dddbce5f0d2"
+
+room_msg_rate: 20 # 房间消息限频默认值 时间窗 1s
+badge_day_range: 20
+room_max_bitrate: 1200
+
+
+official_domains:
+  - demo.eagleplan.fun
+
+self_hosts:
+  - demo.eagleplan.fun
+
+# 域名绑定相关
+dns_server: "114.114.114.114"
+serving_cname: "m2.eagleplan.fun"
+traefik_provider: file # range etcd, file, kubernetescrd
+traefik_route_path: "/Users/golive/ws/live/devenv-all-in-one/traefik/traefik.d"
+
+
+nats:
+  nats_server_address: "nats:4222"
+  nats_topic: "centrifugo.client.>" ## default value
+
+centrifugo:
+    address: "http://centrifugo:8000/api"
+    api_key: "d863cb1c-f8ca-4883-af19-afc23bc6a2ab"
+
+es:
+  is_opensearch: false
+  nodes:
+    - http://es01:9200 # elasticsearch node
+    #- http://es02:9200  # opensearch node
+
+redis: "redis:6379"
+
+db:
+  user: root
+  password: root
+  address: "mariadb:3306"
+  sid: "golive"
+  timezone: "Asia/Shanghai"
+
+msg_db:
+  user: root
+  password: root
+  address: "mariadb:3306"
+  sid: "golive"
+  timezone: "Asia/Shanghai"
+
+oss_store:
+  endpoint: oss-cn-huhehaote.aliyuncs.com
+  access_key: 41bc9af769edc28fb1d86dddbce5f0d2
+  access_secret: 41bc9af769edc28fb1d86dddbce5f0d2
+  bucket: bucket01
+  public_host: "https://bucket01.oss-cn-huhehaote.aliyuncs.com"
+
+oss_store_permanent:
+  endpoint: oss-cn-huhehaote.aliyuncs.com
+  access_key: 41bc9af769edc28fb1d86dddbce5f0d2
+  access_secret: 41bc9af769edc28fb1d86dddbce5f0d2
+  bucket: bucket02
+  public_host: "https://bucket02.oss-cn-huhehaote.aliyuncs.com"
+
+oss_store_temp:
+  endpoint: oss-cn-huhehaote.aliyuncs.com
+  access_key: 41bc9af769edc28fb1d86dddbce5f0d2
+  access_secret: 41bc9af769edc28fb1d86dddbce5f0d2
+  bucket: bucket03
+  public_host: "https://bucket03.oss-cn-huhehaote.aliyuncs.com"
+
+accounting:
+  max_free_quota: 10
+  min_charge_ip: 100
+
+aliyun_sms_sdk:
+  # only aliyun, will support others later
+  access_id: "41bc9af769edc28fb1d86dddbce5f0d2"
+  access_key: "41bc9af769edc28fb1d86dddbce5f0d2"
+  region: "cn-huhehaote"
+  sign: "南京构播云"
+  template: "SMS_248235563"
+  other: other
+
+sms_limit:
+  phone_limit: 3
+  uid_limit: 5
+  ip_limit: 10
+
+
+sso:
+  jwt_key: "e28b27450df92bab0697d5f1f26e82f6"
+  token_expire: 168h
+  max_login_fail: 10
+
+
+influxdb:
+  user: root
+  password: "root"
+  address: "http://influxdb:8086"
+  sid: "peaks"
+  measurement_room: "room_peak"
+  measurement_corp: "corp_peak"
+  measurement_agency: "agency_peak"
+  measurement_site: "site_peak"
+  retention_policy: "autogen"
+  precision: "s"
+  encoding: "gzip"

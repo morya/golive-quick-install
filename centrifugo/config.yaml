@@ -1,0 +1,53 @@
+token_hmac_secret_key: 738bdf3a-b033-4952-868c-8b841ad1e5aa
+admin_password: 262effa0-8e20-4f22-84e5-307994557a39
+admin_secret: 5782e509-60ef-45bb-b13f-7a3f16d6a9f1
+api_key: d863cb1c-f8ca-4883-af19-afc23bc6a2ab
+
+admin: true
+log_level: "info"
+
+# api_insecure: true
+join_leave: true
+presence: true
+allowed_origins:
+  - "*"
+
+engine: redis
+redis_address: redis:6379
+broker: nats
+nats_url: nats:4222
+
+proxy_connect_endpoint: http://live-lemon-api/local_hook/im/connect
+proxy_connect_timeout:  "2s"
+
+
+proxy_http_headers:
+  - Origin
+  - User-Agent
+  - Cookie
+  - Authorization
+  - X-Real-Ip
+  - X-Forwarded-For
+  - X-Request-Id
+
+
+client_channel_limit: 8 # default 128
+client_queue_max_size: 65535 # default 1048576 == 1MB
+
+
+## server side subscribtion
+user_subscribe_to_personal: true
+user_personal_single_connection: true
+
+
+"namespaces":
+  - name: personal
+    presence: true
+    publish: false
+
+  - name: audit
+    publish: false
+    anonymous: false
+    history_size: 3
+    history_ttl: 300s
+    recover: false
