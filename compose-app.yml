@@ -1,0 +1,131 @@
+services:
+  c-front:
+    image: uhub.service.ucloud.cn/moryapub/live-c-front
+    networks:
+      - eagle
+    environment:
+      - TZ=Asia/Shanghai
+
+
+  live-lemon-api:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - api
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+    # ports: 
+    #   - 7300:80
+
+  live-lemon-audit:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - audit
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-spam:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - spam
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-blacklist:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - blacklist
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-relay:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - relay
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-peak:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - peak
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-active:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - room-active
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-msgstore:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - msgstore
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-inout:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - inout
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-ticket:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - ticket
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle
+
+  live-lemon-robot:
+    image: uhub.service.ucloud.cn/moryapub/live-lemon
+    env_file: compose.env
+    command:
+      - /app
+      - robot
+    volumes:
+      - ./config-docker.yaml:/config.yaml
+    networks:
+      - eagle

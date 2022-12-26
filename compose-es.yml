@@ -1,0 +1,35 @@
+services:
+  es01:
+    # docker run --rm --name es-tmp01 -e "discovery.type=single-node"  -p 9201:9200 -p 9301:9300 -t docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+    # image: docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    restart: always
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata01:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+    networks:
+      - eagle
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.2
+    # image: docker.elastic.co/kibana/kibana:7.13.0 # 从这个版本起，有arm镜像
+    restart: always
+    environment:
+      - "ELASTICSEARCH_HOSTS=http://es01:9200"
+    networks:
+      - eagle
+    ports:
+      - 5601:5601

@@ -1,25 +1,73 @@
 version: '3'
 
+networks:
+  eagle:
+    name: eagle
+    external: true
+
 services:
-  traefik:
-    # image: traefik:v2.6
-    image: uhub.service.ucloud.cn/moryapub/traefik:v2.6
+  centrifugo:
     restart: always
+    networks:
+      - eagle
+    image: centrifugo/centrifugo:v3.1.1
+    volumes:
+      - ./centrifugo:/centrifugo
+    ports:
+      - 8000:8000
+    command:
+      - centrifugo
+      - --config=config.yaml
+
+  traefik:
+    # The official v2 Traefik docker image
+    restart: always
+    networks:
+      - eagle
+
+    image: traefik:v2.6
+    # Enables the web UI and tells Traefik to listen to docker
     command: --configfile=/etc/traefik/traefik.yaml --api.insecure=true --api.dashboard=true
     ports:
+      # The HTTP port
       - "80:80"
       - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
       - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events
       - ./traefik/config.yaml:/etc/traefik/traefik.yaml
+      - ./traefik/ssl:/etc/traefik-ssl
       - ./traefik/traefik.d:/etc/traefik.d
       - ./traefik/acme.json:/data/acme.json
+    depends_on:
+      - centrifugo
 
-  golive:
-    image: uhub.service.ucloud.cn/moryapub/live-c-front
+  redis:
     restart: always
+    networks:
+      - eagle
+    # image: redisfab/rejson:master-x64-bionic
+    image: redisfab/rejson:master-arm64v8-bionic
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis/data:/data
+    ports:
+      - 6379:6379
 
-  # hello:
-  #   image: strm/helloworld-http
-  #   restart: always
+  nats:
+    restart: always
+    networks:
+      - eagle
+    image: nats:2.7.4-alpine3.15
+    ports:
+      - 4222:4222
+      - 6222:6222
+      - 8222:8222
+
+
+volumes:
+  esdata01:
+    driver: local
+  influxdata:
+    driver: local

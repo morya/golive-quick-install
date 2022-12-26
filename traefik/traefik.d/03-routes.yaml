@@ -1,11 +1,43 @@
 http:
   routers:
-    route-golive:
-      tls:
-        certResolver: myresolver
+    route-api:
+      rule: Host(`demo.eagleplan.fun`) && PathPrefix(`/lemon`)
+      tls: {}
       middlewares:
         - middle-cors
       entryPoints:
         - websecure
-      service: service-golive
-      # rule: Host("live.domain.com")
+      service: api-live-lemon
+
+    route-im-centrifugo:
+      rule: Host(`demo.eagleplan.fun`) && PathPrefix(`/connection`)
+      tls: {}
+      middlewares:
+        - middle-replace-uri-centrifugo
+      entryPoints:
+        - websecure
+      service: service-centrifugo
+
+    # route-sso-eagleplan-fun:
+    #   rule: Host(`demo.eagleplan.fun`) && PathPrefix(`/sso`)
+    #   tls: {}
+    #   entryPoints:
+    #     - websecure
+    #   service: service-sso-eagleplan-fun
+
+    route-b-console:
+      rule: Host(`demo.eagleplan.fun`) && PathPrefix(`/cs`)
+      tls: {}
+      entryPoints:
+        - websecure
+      service: service-b-console
+
+    http-c-front:
+      rule: Host(`demo.eagleplan.fun`)
+      tls: {}
+      middlewares:
+        - http-redirect-to-https
+      entryPoints:
+        - web
+        - websecure
+      service: service-c-front

@@ -1,8 +1,26 @@
 http:
 
   services:
-    service-golive:
+    api-live-lemon:
       loadBalancer:
-        # passHostHeader: true
+        passHostHeader: true
         servers:
-          - url: http://golive:80
+          - url: http://live-lemon-api
+
+    service-centrifugo:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://centrifugo:8000
+
+    service-b-console:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+          - url: http://live-b-console
+
+    service-c-front:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+          - url: http://c-front

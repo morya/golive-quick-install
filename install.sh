@@ -10,9 +10,15 @@ function on_exit {
 
 trap 'on_exit' SIGINT SIGTERM
 
+GIT_REPO=https://github.com/morya/golive-quick-install.git
+
 function die {
     echo $1
     exit
+}
+
+function prepare_pkg {
+    apt-get update && apt-get install -y jq
 }
 
 function install_docker {
@@ -62,15 +68,7 @@ function check_os_pkg {
 
 function download_app {
     cd /root/
-    git clone https://github.com/morya/golive-quick-install.git
-}
-
-function start_app {
-    cd ~/golive-quick-install
-    docker compose pull --force
-    docker compose down
-    docker compose up -d
-    docker ps -a
+    git clone $GIT_REPO || die "clone $GIT_REPO failed"
 }
 
 function check_domain {
@@ -90,8 +88,17 @@ function setup_domain {
     echo "domain setup ok"
 }
 
-apt-get install -y jq
 
+function start_app {
+    cd ~/golive-quick-install
+    docker compose pull --force
+    docker compose down
+    docker compose up -d
+    docker ps -a
+}
+
+
+prepare_pkg
 check_running_user
 check_os_pkg
 download_app

@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /etc/traefik-ssl/eagleplan.fun.crt
+      keyFile: /etc/traefik-ssl/eagleplan.fun.key

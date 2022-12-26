@@ -6,7 +6,7 @@ api:
   dashboard: true
   insecure: true
 
-accesslog:
+accessLog: 
   format: json
 
 entryPoints:
@@ -16,21 +16,11 @@ entryPoints:
       redirections:
         entryPoint:
           to: websecure
-          permanent: true
+          permanent: false
   websecure:
     address: ":443"
   traefik:
     address: ":8080"
-
-certificatesResolvers:
-  myresolver:
-    acme:
-      email: customer@qq.com
-      storage: /data/acme.json
-      httpChallenge:
-        # used during the challenge
-        entryPoint: web
-
 
 providers:
   file:

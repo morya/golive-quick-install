@@ -1,0 +1,45 @@
+services:
+  etcd:
+    restart: always
+    networks:
+      - eagle
+    image: bitnami/etcd:3.5.6
+    ports:
+      - 2379:2379
+      - 2380:2380
+    environment:
+      - ETCD_ADVERTISE_CLIENT_URLS=http://etcd:2379,http://127.0.0.1:2379
+      - ALLOW_NONE_AUTHENTICATION=yes
+
+  mariadb:
+    restart: always
+    networks:
+      - eagle
+    # image: mysql/mysql-server:5.7
+    image: mariadb:10.8.3
+    # command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./mysql/mysql-data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/mysql.cnf ## mariadb
+      - ./mysql/my.cnf:/etc/my.cnf ## mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - TZ=Asia/Shanghai
+    ports:
+      - "3306:3306"
+
+  influxdb:
+    image: influxdb:1.8
+    restart: always
+    networks:
+      - eagle
+    volumes:
+      - influxdata:/var/lib/influxdb
+      - ./influxdb-data:/data2
+
+    # environment:
+    #  设置 influxd 服务 rpc 数据 backup/restore 端口 ## 实际不生效，会报错
+    #   - INFLUXDB_BIND_ADDRESS="0.0.0.0:8088"
+    ports:
+      - "8086:8086"
+      - "8088:8088"
